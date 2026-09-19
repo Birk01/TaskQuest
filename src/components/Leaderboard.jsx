@@ -1,7 +1,6 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { leaderboardData } from '../data';
-import { useAppState } from '../context';
+import { leaderboardData } from '../data.js';
+import { useAppState } from '../context.jsx';
 import { Crown, Flame, Trophy, Medal, TrendingUp } from 'lucide-react';
 
 export default function Leaderboard() {
@@ -10,20 +9,7 @@ export default function Leaderboard() {
   const sorted = [...leaderboardData].sort((a, b) => b.xp - a.xp);
   const userRank = sorted.findIndex(e => e.name === user.name) + 1;
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.08 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: { opacity: 1, x: 0 },
-  };
-
-  const getRankIcon = (index: number) => {
+  const getRankIcon = (index) => {
     if (index === 0) return <Crown className="w-5 h-5 text-yellow-400" />;
     if (index === 1) return <Medal className="w-5 h-5 text-slate-300" />;
     if (index === 2) return <Medal className="w-5 h-5 text-amber-600" />;
@@ -31,11 +17,7 @@ export default function Leaderboard() {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="space-y-6"
-    >
+    <div className="space-y-6 animate-fadeIn">
       {/* Header */}
       <div>
         <h2 className="text-2xl font-bold text-white">Рейтинг</h2>
@@ -43,11 +25,7 @@ export default function Leaderboard() {
       </div>
 
       {/* Your Position */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-r from-purple-500/10 to-indigo-500/10 border border-purple-500/30 rounded-2xl p-5"
-      >
+      <div className="bg-gradient-to-r from-purple-500/10 to-indigo-500/10 border border-purple-500/30 rounded-2xl p-5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center text-2xl">
@@ -63,16 +41,13 @@ export default function Leaderboard() {
             <p className="text-xs text-slate-500">место</p>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Top 3 Podium */}
       <div className="grid grid-cols-3 gap-4">
         {sorted.slice(0, 3).map((entry, index) => (
-          <motion.div
+          <div
             key={entry.id}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
             className={`text-center p-4 rounded-2xl border ${
               index === 0
                 ? 'bg-gradient-to-b from-yellow-500/20 to-yellow-600/5 border-yellow-500/30 order-2'
@@ -94,17 +69,12 @@ export default function Leaderboard() {
               )}
               <span className="text-sm font-bold text-white">{entry.xp} XP</span>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
 
       {/* Full Leaderboard */}
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden"
-      >
+      <div className="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden">
         <div className="p-4 border-b border-slate-700 flex items-center gap-2">
           <Trophy className="w-5 h-5 text-yellow-400" />
           <h3 className="text-white font-semibold">Полный рейтинг</h3>
@@ -114,9 +84,8 @@ export default function Leaderboard() {
           {sorted.map((entry, index) => {
             const isCurrentUser = entry.name === user.name;
             return (
-              <motion.div
+              <div
                 key={entry.id}
-                variants={itemVariants}
                 className={`flex items-center gap-4 p-4 transition-all ${
                   isCurrentUser ? 'bg-purple-500/10' : 'hover:bg-slate-700/30'
                 }`}
@@ -160,11 +129,11 @@ export default function Leaderboard() {
                   <p className="text-sm font-bold text-white">{entry.xp.toLocaleString()}</p>
                   <p className="text-xs text-slate-500">XP</p>
                 </div>
-              </motion.div>
+              </div>
             );
           })}
         </div>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }

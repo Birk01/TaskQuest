@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useAppState } from '../context';
+import { useAppState } from '../context.jsx';
 import { Flame, Trophy, Target, Zap, Calendar, Award, Edit3, Save, X } from 'lucide-react';
 
 export default function Profile() {
@@ -17,18 +16,12 @@ export default function Profile() {
   );
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="space-y-6"
-    >
+    <div className="space-y-6 animate-fadeIn">
       {/* Profile Card */}
       <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-2xl p-6 relative overflow-hidden">
-        {/* Background decoration */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-purple-500/10 to-indigo-500/10 rounded-full -translate-y-1/2 translate-x-1/2" />
         
         <div className="relative flex flex-col sm:flex-row items-center sm:items-start gap-6">
-          {/* Avatar */}
           <div className="relative">
             <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center text-5xl shadow-xl shadow-purple-500/20">
               {avatar}
@@ -38,7 +31,6 @@ export default function Profile() {
             </div>
           </div>
 
-          {/* Info */}
           <div className="flex-1 text-center sm:text-left">
             {isEditing ? (
               <div className="space-y-3">
@@ -91,18 +83,15 @@ export default function Profile() {
               </>
             )}
 
-            {/* XP Bar */}
             <div className="mt-4 max-w-md">
               <div className="flex justify-between text-sm mb-1">
                 <span className="text-slate-400">Уровень {user.level}</span>
                 <span className="text-purple-400">{user.xp}/{user.xpToNextLevel} XP</span>
               </div>
               <div className="h-3 bg-slate-700 rounded-full overflow-hidden">
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: `${xpProgress}%` }}
-                  transition={{ duration: 1 }}
-                  className="h-full bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full"
+                <div
+                  className="h-full bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full transition-all duration-1000"
+                  style={{ width: `${xpProgress}%` }}
                 />
               </div>
             </div>
@@ -146,11 +135,8 @@ export default function Profile() {
         </h3>
         <div className="flex items-center gap-1">
           {Array.from({ length: Math.min(user.level, 10) }, (_, i) => (
-            <motion.div
+            <div
               key={i}
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: i * 0.05 }}
               className={`h-8 rounded-md flex-1 ${
                 i < user.level - 1
                   ? 'bg-gradient-to-t from-purple-600 to-indigo-500'
@@ -159,10 +145,7 @@ export default function Profile() {
               style={{ minHeight: `${20 + (i * 8)}px` }}
             />
           ))}
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: user.level * 0.05 }}
+          <div
             className="h-8 rounded-md flex-1 bg-slate-700 border-2 border-dashed border-slate-600"
             style={{ minHeight: `${20 + (user.level * 8)}px` }}
           />
@@ -182,14 +165,11 @@ export default function Profile() {
         </h3>
         <div className="grid grid-cols-7 gap-2">
           {['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].map((day, i) => {
-            const isActive = i < 5; // Simulated activity
+            const isActive = i < 5;
             return (
               <div key={day} className="text-center">
                 <p className="text-xs text-slate-500 mb-2">{day}</p>
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: i * 0.05 }}
+                <div
                   className={`h-12 rounded-lg ${
                     isActive
                       ? 'bg-gradient-to-t from-green-600 to-green-400'
@@ -204,11 +184,11 @@ export default function Profile() {
           })}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
-function StatBlock({ icon, label, value, sublabel }: { icon: React.ReactNode; label: string; value: string; sublabel: string }) {
+function StatBlock({ icon, label, value, sublabel }) {
   return (
     <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-4">
       <div className="flex items-center gap-2 mb-2">

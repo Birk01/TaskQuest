@@ -1,35 +1,23 @@
-import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
-import { Task, Achievement, User } from './types';
-import { initialUser, initialTasks, initialAchievements } from './data';
+import React, { createContext, useContext, useState, useCallback } from 'react';
+import { initialUser, initialTasks, initialAchievements } from './data.js';
 
-interface AppState {
-  user: User;
-  tasks: Task[];
-  achievements: Achievement[];
-  addTask: (task: Task) => void;
-  toggleTask: (id: string) => void;
-  deleteTask: (id: string) => void;
-  updateTaskProgress: (id: string, value: number) => void;
-}
+const AppContext = createContext(null);
 
-const AppContext = createContext<AppState | null>(null);
+export function AppProvider({ children }) {
+  const [user, setUser] = useState(initialUser);
+  const [tasks, setTasks] = useState(initialTasks);
+  const [achievements, setAchievements] = useState(initialAchievements);
 
-export function AppProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User>(initialUser);
-  const [tasks, setTasks] = useState<Task[]>(initialTasks);
-  const [achievements, setAchievements] = useState<Achievement[]>(initialAchievements);
-
-  const addTask = useCallback((task: Task) => {
+  const addTask = useCallback((task) => {
     setTasks(prev => [...prev, task]);
   }, []);
 
-  const toggleTask = useCallback((id: string) => {
+  const toggleTask = useCallback((id) => {
     setTasks(prev => {
       const task = prev.find(t => t.id === id);
       if (!task) return prev;
 
       if (!task.completed) {
-        // Complete task
         setUser(u => {
           const newXp = u.xp + task.xpReward;
           let newLevel = u.level;
@@ -66,17 +54,16 @@ export function AppProvider({ children }: { children: ReactNode }) {
             : t
         );
       } else {
-        // Uncomplete task
         return prev.map(t => (t.id === id ? { ...t, completed: false } : t));
       }
     });
   }, []);
 
-  const deleteTask = useCallback((id: string) => {
+  const deleteTask = useCallback((id) => {
     setTasks(prev => prev.filter(t => t.id !== id));
   }, []);
 
-  const updateTaskProgress = useCallback((id: string, value: number) => {
+  const updateTaskProgress = useCallback((id, value) => {
     setTasks(prev =>
       prev.map(t => {
         if (t.id !== id) return t;

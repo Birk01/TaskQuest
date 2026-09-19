@@ -1,6 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { useAppState } from '../context';
+import { useAppState } from '../context.jsx';
 import { Flame, Trophy, Target, Zap, TrendingUp, Calendar } from 'lucide-react';
 
 export default function Dashboard() {
@@ -11,28 +10,10 @@ export default function Dashboard() {
   const unlockedAchievements = achievements.filter(a => a.unlocked);
   const xpProgress = (user.xp / user.xpToNextLevel) * 100;
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-  };
-
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="space-y-6"
-    >
+    <div className="space-y-6 animate-fadeIn">
       {/* Welcome Header */}
-      <motion.div variants={itemVariants} className="bg-gradient-to-r from-purple-600/20 via-indigo-600/20 to-blue-600/20 border border-purple-500/20 rounded-2xl p-6">
+      <div className="bg-gradient-to-r from-purple-600/20 via-indigo-600/20 to-blue-600/20 border border-purple-500/20 rounded-2xl p-6">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-2xl font-bold text-white">Привет, {user.name}! {user.avatar}</h2>
@@ -54,20 +35,18 @@ export default function Dashboard() {
             <span className="text-purple-400 font-medium">{user.xp} / {user.xpToNextLevel} XP</span>
           </div>
           <div className="h-3 bg-slate-700 rounded-full overflow-hidden">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: `${xpProgress}%` }}
-              transition={{ duration: 1, ease: 'easeOut' }}
-              className="h-full bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full relative"
+            <div
+              className="h-full bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full relative transition-all duration-1000"
+              style={{ width: `${xpProgress}%` }}
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse" />
-            </motion.div>
+            </div>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Stats Grid */}
-      <motion.div variants={itemVariants} className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           icon={<Target className="w-5 h-5" />}
           label="Задачи сегодня"
@@ -92,12 +71,12 @@ export default function Dashboard() {
           value={user.totalXp.toString()}
           color="from-purple-500 to-pink-500"
         />
-      </motion.div>
+      </div>
 
       {/* Main Content Grid */}
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Today's Tasks */}
-        <motion.div variants={itemVariants} className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+        <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
           <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
             <Calendar className="w-5 h-5 text-blue-400" />
             Задачи на сегодня
@@ -128,10 +107,10 @@ export default function Dashboard() {
               <p className="text-center text-slate-500 py-4">Все задачи выполнены! 🎉</p>
             )}
           </div>
-        </motion.div>
+        </div>
 
         {/* Recent Achievements */}
-        <motion.div variants={itemVariants} className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+        <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
           <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
             <Trophy className="w-5 h-5 text-yellow-400" />
             Последние достижения
@@ -151,11 +130,11 @@ export default function Dashboard() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Active Streaks */}
-      <motion.div variants={itemVariants} className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+      <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
         <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
           <Flame className="w-5 h-5 text-orange-400" />
           Активные серии
@@ -176,19 +155,19 @@ export default function Dashboard() {
               </div>
               <div className="mt-2 h-1.5 bg-slate-700 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-orange-400 to-red-400 rounded-full"
+                  className="h-full bg-gradient-to-r from-orange-400 to-red-400 rounded-full transition-all duration-500"
                   style={{ width: `${Math.min(100, ((task.streakCount || 0) / 30) * 100)}%` }}
                 />
               </div>
             </div>
           ))}
         </div>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }
 
-function StatCard({ icon, label, value, color }: { icon: React.ReactNode; label: string; value: string; color: string }) {
+function StatCard({ icon, label, value, color }) {
   return (
     <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-4">
       <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${color} flex items-center justify-center text-white mb-3`}>
