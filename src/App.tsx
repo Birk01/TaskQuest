@@ -7,6 +7,7 @@ import Tasks from './components/Tasks';
 import Achievements from './components/Achievements';
 import Leaderboard from './components/Leaderboard';
 import Profile from './components/Profile';
+import Architecture from './components/Architecture';
 import { User } from 'lucide-react';
 
 function AppContent() {
@@ -25,6 +26,8 @@ function AppContent() {
         return <Leaderboard />;
       case 'profile':
         return <Profile />;
+      case 'architecture':
+        return <Architecture />;
       default:
         return <Dashboard />;
     }
