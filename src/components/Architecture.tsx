@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { 
   Server, Database, Brain, MessageSquare, Shield, Cloud, 
   Cpu, Layers, GitBranch, Zap, Globe, Users, 
-  CheckCircle2, Circle, ArrowRight, Sparkles, Bot
+  CheckCircle2, Circle, ArrowRight, Sparkles, Bot, Code2
 } from 'lucide-react';
 
 export default function Architecture() {
@@ -31,7 +31,7 @@ export default function Architecture() {
       <motion.div variants={itemVariants}>
         <h2 className="text-2xl font-bold text-white">Архитектура проекта</h2>
         <p className="text-slate-400 text-sm mt-1">
-          План развития TaskQuest с бекендом и ИИ-ассистентом
+          План развития TaskQuest: React + FastAPI + ИИ-ассистент
         </p>
       </motion.div>
 
@@ -63,11 +63,11 @@ export default function Architecture() {
           </div>
           
           <div className="space-y-3">
-            <TechItem icon={<Server className="w-4 h-4" />} label="Backend API (Node.js/Express)" status="planned" />
-            <TechItem icon={<Database className="w-4 h-4" />} label="База данных (PostgreSQL/MongoDB)" status="planned" />
-            <TechItem icon={<Shield className="w-4 h-4" />} label="Аутентификация (JWT/OAuth)" status="planned" />
-            <TechItem icon={<Brain className="w-4 h-4" />} label="ИИ-ассистент (OpenAI API)" status="planned" />
-            <TechItem icon={<Cloud className="w-4 h-4" />} label="Деплой (Docker + Cloud)" status="planned" />
+            <TechItem icon={<Code2 className="w-4 h-4" />} label="Backend API (Python + FastAPI)" status="planned" />
+            <TechItem icon={<Database className="w-4 h-4" />} label="База данных (PostgreSQL + SQLAlchemy)" status="planned" />
+            <TechItem icon={<Shield className="w-4 h-4" />} label="Аутентификация (JWT + OAuth2)" status="planned" />
+            <TechItem icon={<Brain className="w-4 h-4" />} label="ИИ-ассистент (OpenAI + LangChain)" status="planned" />
+            <TechItem icon={<Cloud className="w-4 h-4" />} label="Деплой (Docker + Railway)" status="planned" />
           </div>
         </div>
       </motion.div>
@@ -98,17 +98,22 @@ export default function Architecture() {
             <ArrowRight className="w-5 h-5 text-slate-500 rotate-90" />
           </div>
 
-          {/* Backend Layer */}
+          {/* Backend Layer - FastAPI */}
           <div className="border border-green-500/30 rounded-xl p-4 bg-green-500/5">
             <div className="flex items-center gap-2 mb-3">
               <Server className="w-5 h-5 text-green-400" />
-              <span className="text-sm font-semibold text-green-400">Backend Layer (API)</span>
+              <span className="text-sm font-semibold text-green-400">Backend Layer (FastAPI)</span>
+              <span className="text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full ml-auto">Python 3.11+</span>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-              <MiniBlock label="Node.js" />
-              <MiniBlock label="Express.js" />
-              <MiniBlock label="REST API" />
+              <MiniBlock label="FastAPI" />
+              <MiniBlock label="Pydantic v2" />
+              <MiniBlock label="SQLAlchemy" />
+              <MiniBlock label="Alembic" />
+              <MiniBlock label="Uvicorn" />
               <MiniBlock label="WebSocket" />
+              <MiniBlock label="Celery" />
+              <MiniBlock label="Redis" />
             </div>
           </div>
 
@@ -125,8 +130,8 @@ export default function Architecture() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
               <MiniBlock label="PostgreSQL" />
               <MiniBlock label="Redis Cache" />
-              <MiniBlock label="Prisma ORM" />
-              <MiniBlock label="S3 Storage" />
+              <MiniBlock label="SQLAlchemy ORM" />
+              <MiniBlock label="S3 / MinIO" />
             </div>
           </div>
 
@@ -143,8 +148,76 @@ export default function Architecture() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
               <MiniBlock label="OpenAI GPT-4" />
               <MiniBlock label="LangChain" />
-              <MiniBlock label="Vector DB" />
-              <MiniBlock label="Prompt Engine" />
+              <MiniBlock label="ChromaDB" />
+              <MiniBlock label="Prompt Templates" />
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* FastAPI Code Preview */}
+      <motion.div variants={itemVariants} className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+        <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+          <Code2 className="w-5 h-5 text-green-400" />
+          Пример FastAPI кода
+        </h3>
+
+        <div className="grid md:grid-cols-2 gap-4">
+          <div>
+            <p className="text-xs text-slate-400 mb-2 font-medium">main.py — точка входа</p>
+            <div className="bg-slate-900 border border-slate-700 rounded-xl p-4 font-mono text-xs overflow-x-auto">
+              <pre className="text-slate-300">
+{`from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from app.routers import (
+    auth, users, tasks, 
+    achievements, ai
+)
+
+app = FastAPI(
+    title="TaskQuest API",
+    version="1.0.0"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(auth.router)
+app.include_router(users.router)
+app.include_router(tasks.router)
+app.include_router(achievements.router)
+app.include_router(ai.router)`}
+              </pre>
+            </div>
+          </div>
+
+          <div>
+            <p className="text-xs text-slate-400 mb-2 font-medium">models/task.py — SQLAlchemy модель</p>
+            <div className="bg-slate-900 border border-slate-700 rounded-xl p-4 font-mono text-xs overflow-x-auto">
+              <pre className="text-slate-300">
+{`from sqlalchemy import Column, String, ...
+from app.database import Base
+
+class Task(Base):
+    __tablename__ = "tasks"
+
+    id = Column(String, primary_key=True)
+    user_id = Column(String, ForeignKey(...))
+    title = Column(String, nullable=False)
+    description = Column(Text)
+    type = Column(Enum(TaskType))
+    priority = Column(Enum(Priority))
+    category = Column(Enum(Category))
+    xp_reward = Column(Integer, default=25)
+    completed = Column(Boolean, default=False)
+    streak_count = Column(Integer, default=0)
+    progress = Column(Integer)
+    created_at = Column(DateTime, default=now)`}
+              </pre>
             </div>
           </div>
         </div>
@@ -161,7 +234,7 @@ export default function Architecture() {
           <FeatureCard
             icon={<Sparkles className="w-5 h-5" />}
             title="Умные рекомендации"
-            description="Анализирует ваши задачи и предлагает оптимальный порядок выполнения на основе приоритетов и дедлайнов"
+            description="Анализирует задачи и предлагает оптимальный порядок выполнения на основе приоритетов и дедлайнов"
           />
           <FeatureCard
             icon={<MessageSquare className="w-5 h-5" />}
@@ -176,7 +249,7 @@ export default function Architecture() {
           <FeatureCard
             icon={<GitBranch className="w-5 h-5" />}
             title="Анализ паттернов"
-            description="Выявляет закономерности в вашей продуктивности и предлагает улучшения"
+            description="Выявляет закономерности в продуктивности и предлагает улучшения"
           />
         </div>
 
@@ -188,7 +261,7 @@ export default function Architecture() {
             </div>
             <div>
               <p className="text-sm font-medium text-white">TaskQuest AI</p>
-              <p className="text-xs text-slate-500">Ваш персональный помощник</p>
+              <p className="text-xs text-slate-500">Ваш персональный помощник (powered by GPT-4)</p>
             </div>
           </div>
           
@@ -213,21 +286,22 @@ export default function Architecture() {
       <motion.div variants={itemVariants} className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
         <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
           <Server className="w-5 h-5 text-green-400" />
-          Структура Backend API
+          FastAPI Endpoints
         </h3>
 
         <div className="grid md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <h4 className="text-sm font-semibold text-green-400 mb-2">Endpoints</h4>
+            <h4 className="text-sm font-semibold text-green-400 mb-2">Core Endpoints</h4>
             <CodeBlock code="POST   /api/auth/register" />
             <CodeBlock code="POST   /api/auth/login" />
-            <CodeBlock code="GET    /api/users/:id" />
+            <CodeBlock code="POST   /api/auth/refresh" />
+            <CodeBlock code="GET    /api/users/me" />
+            <CodeBlock code="PATCH  /api/users/me" />
             <CodeBlock code="GET    /api/tasks" />
             <CodeBlock code="POST   /api/tasks" />
-            <CodeBlock code="PATCH  /api/tasks/:id" />
-            <CodeBlock code="DELETE /api/tasks/:id" />
+            <CodeBlock code="PATCH  /api/tasks/{id}" />
+            <CodeBlock code="DELETE /api/tasks/{id}" />
             <CodeBlock code="GET    /api/achievements" />
-            <CodeBlock code="POST   /api/chat/message" />
           </div>
 
           <div className="space-y-2">
@@ -237,6 +311,11 @@ export default function Architecture() {
             <CodeBlock code="POST   /api/ai/breakdown" />
             <CodeBlock code="GET    /api/ai/analyze" />
             <CodeBlock code="POST   /api/ai/motivate" />
+            <div className="mt-4">
+              <h4 className="text-sm font-semibold text-cyan-400 mb-2">WebSocket</h4>
+              <CodeBlock code="WS     /api/ws/chat/{user_id}" />
+              <CodeBlock code="WS     /api/ws/notifications" />
+            </div>
           </div>
         </div>
       </motion.div>
@@ -245,28 +324,100 @@ export default function Architecture() {
       <motion.div variants={itemVariants} className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
         <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
           <Database className="w-5 h-5 text-yellow-400" />
-          Схема базы данных
+          Схема базы данных (SQLAlchemy)
         </h3>
 
         <div className="grid md:grid-cols-3 gap-4">
           <SchemaBlock
             title="users"
-            fields={['id (UUID)', 'email', 'password_hash', 'name', 'avatar', 'level', 'xp', 'streak', 'created_at']}
+            fields={['id: UUID (PK)', 'email: String (unique)', 'password_hash: String', 'name: String', 'avatar: String', 'level: Integer', 'xp: Integer', 'streak: Integer', 'created_at: DateTime']}
           />
           <SchemaBlock
             title="tasks"
-            fields={['id (UUID)', 'user_id (FK)', 'title', 'description', 'type', 'priority', 'category', 'xp_reward', 'completed', 'streak_count', 'created_at']}
+            fields={['id: UUID (PK)', 'user_id: UUID (FK)', 'title: String', 'type: Enum', 'priority: Enum', 'category: Enum', 'xp_reward: Integer', 'completed: Boolean', 'streak_count: Integer', 'created_at: DateTime']}
           />
           <SchemaBlock
             title="chat_messages"
-            fields={['id (UUID)', 'user_id (FK)', 'role', 'content', 'timestamp', 'context']}
+            fields={['id: UUID (PK)', 'user_id: UUID (FK)', 'role: Enum', 'content: Text', 'context: JSON', 'created_at: DateTime']}
           />
+        </div>
+      </motion.div>
+
+      {/* Python Project Structure */}
+      <motion.div variants={itemVariants} className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+        <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+          <Code2 className="w-5 h-5 text-green-400" />
+          Структура FastAPI проекта
+        </h3>
+
+        <div className="bg-slate-900 border border-slate-700 rounded-xl p-4 font-mono text-xs overflow-x-auto">
+          <pre className="text-slate-300">
+{`backend/
+├── app/
+│   ├── __init__.py
+│   ├── main.py                 # FastAPI app entry point
+│   ├── config.py               # Settings (pydantic-settings)
+│   ├── database.py             # SQLAlchemy engine & session
+│   │
+│   ├── models/                 # SQLAlchemy models
+│   │   ├── __init__.py
+│   │   ├── user.py
+│   │   ├── task.py
+│   │   ├── achievement.py
+│   │   └── chat_message.py
+│   │
+│   ├── schemas/                # Pydantic schemas (request/response)
+│   │   ├── __init__.py
+│   │   ├── user.py
+│   │   ├── task.py
+│   │   ├── achievement.py
+│   │   └── chat.py
+│   │
+│   ├── routers/                # API endpoints
+│   │   ├── __init__.py
+│   │   ├── auth.py
+│   │   ├── users.py
+│   │   ├── tasks.py
+│   │   ├── achievements.py
+│   │   ├── leaderboard.py
+│   │   └── ai.py
+│   │
+│   ├── services/               # Business logic
+│   │   ├── __init__.py
+│   │   ├── auth_service.py
+│   │   ├── task_service.py
+│   │   ├── achievement_service.py
+│   │   ├── ai_service.py
+│   │   └── gamification.py     # XP, levels, streaks logic
+│   │
+│   ├── core/                   # Core utilities
+│   │   ├── security.py         # JWT, password hashing
+│   │   ├── dependencies.py     # FastAPI dependencies
+│   │   └── exceptions.py
+│   │
+│   └── utils/                  # Helpers
+│       ├── email.py
+│       └── redis_client.py
+│
+├── alembic/                    # Database migrations
+│   ├── versions/
+│   └── env.py
+├── tests/                      # pytest tests
+│   ├── test_auth.py
+│   ├── test_tasks.py
+│   └── test_ai.py
+├── alembic.ini
+├── requirements.txt
+├── pyproject.toml
+├── Dockerfile
+└── .env`}
+          </pre>
         </div>
       </motion.div>
 
       {/* Tech Stack */}
       <motion.div variants={itemVariants} className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">Рекомендуемый стек технологий</h3>
+        <h3 className="text-lg font-semibold text-white mb-4">Стек технологий</h3>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           <StackSection
@@ -275,20 +426,79 @@ export default function Architecture() {
             items={['React 18', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'React Query']}
           />
           <StackSection
-            title="Backend"
+            title="Backend (Python)"
             color="green"
-            items={['Node.js', 'Express.js', 'Prisma ORM', 'JWT Auth', 'WebSocket']}
+            items={['FastAPI', 'Pydantic v2', 'SQLAlchemy 2.0', 'Alembic', 'Uvicorn']}
           />
           <StackSection
             title="Database"
             color="yellow"
-            items={['PostgreSQL', 'Redis', 'Supabase', 'S3 Storage']}
+            items={['PostgreSQL', 'Redis', 'asyncpg', 'SQLAlchemy Async']}
           />
           <StackSection
             title="AI & ML"
             color="purple"
-            items={['OpenAI API', 'LangChain', 'Pinecone', 'Hugging Face']}
+            items={['OpenAI API', 'LangChain', 'ChromaDB', 'tiktoken']}
           />
+        </div>
+      </motion.div>
+
+      {/* AI Integration Example */}
+      <motion.div variants={itemVariants} className="bg-gradient-to-br from-purple-500/10 to-indigo-500/10 border border-purple-500/30 rounded-2xl p-6">
+        <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+          <Brain className="w-5 h-5 text-purple-400" />
+          Пример интеграции ИИ (Python)
+        </h3>
+
+        <div className="bg-slate-900 border border-slate-700 rounded-xl p-4 font-mono text-xs overflow-x-auto">
+          <pre className="text-slate-300">
+{`# app/services/ai_service.py
+from openai import AsyncOpenAI
+from langchain.prompts import ChatPromptTemplate
+from app.config import settings
+
+client = AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
+
+async def chat_with_ai(user_id: str, message: str, context: dict) -> str:
+    """Общение с ИИ-ассистентом"""
+    
+    system_prompt = f"""
+    Ты — ИИ-ассистент TaskQuest, приложения для геймификации продуктивности.
+    
+    Информация о пользователе:
+    - Уровень: {context['user']['level']}
+    - Текущая серия: {context['user']['streak']} дней
+    - Выполнено задач: {context['user']['tasks_completed']}
+    
+    Активные задачи:
+    {chr(10).join(f'- {t["title"]} ({t["priority"]})' for t in context['active_tasks'])}
+    
+    Твоя задача: мотивировать, давать советы по продуктивности,
+    помогать планировать день и достигать целей.
+    """
+    
+    response = await client.chat.completions.create(
+        model="gpt-4",
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": message}
+        ],
+        temperature=0.7,
+        max_tokens=500,
+    )
+    
+    return response.choices[0].message.content
+
+async def suggest_tasks(user_context: dict) -> list[dict]:
+    """Умные рекомендации по задачам"""
+    # ... реализация
+    pass
+
+async def breakdown_task(task_title: str) -> list[str]:
+    """Разбить большую задачу на подзадачи"""
+    # ... реализация
+    pass`}
+          </pre>
         </div>
       </motion.div>
 
@@ -303,10 +513,11 @@ export default function Architecture() {
           <div className="bg-slate-700/30 rounded-xl p-4">
             <h4 className="text-sm font-semibold text-cyan-400 mb-2">Development</h4>
             <ul className="space-y-1 text-xs text-slate-400">
-              <li>• Vite dev server</li>
-              <li>• Hot reload</li>
+              <li>• Vite dev server (frontend)</li>
+              <li>• uvicorn --reload (backend)</li>
               <li>• Local PostgreSQL</li>
               <li>• Mock AI responses</li>
+              <li>• pytest для тестов</li>
             </ul>
           </div>
           <div className="bg-slate-700/30 rounded-xl p-4">
@@ -314,18 +525,56 @@ export default function Architecture() {
             <ul className="space-y-1 text-xs text-slate-400">
               <li>• Docker containers</li>
               <li>• Test database</li>
-              <li>• CI/CD pipeline</li>
-              <li>• Monitoring</li>
+              <li>• GitHub Actions CI</li>
+              <li>• Monitoring (Sentry)</li>
             </ul>
           </div>
           <div className="bg-slate-700/30 rounded-xl p-4">
             <h4 className="text-sm font-semibold text-cyan-400 mb-2">Production</h4>
             <ul className="space-y-1 text-xs text-slate-400">
-              <li>• AWS/Vercel/Railway</li>
-              <li>• CDN for frontend</li>
-              <li>• Auto-scaling</li>
+              <li>• Railway / Render</li>
+              <li>• Vercel (frontend)</li>
+              <li>• Gunicorn + Uvicorn workers</li>
               <li>• Backup & recovery</li>
             </ul>
+          </div>
+        </div>
+
+        {/* Docker Compose */}
+        <div className="mt-4">
+          <p className="text-xs text-slate-400 mb-2 font-medium">docker-compose.yml</p>
+          <div className="bg-slate-900 border border-slate-700 rounded-xl p-4 font-mono text-xs overflow-x-auto">
+            <pre className="text-slate-300">
+{`version: '3.8'
+services:
+  frontend:
+    build: ./frontend
+    ports: ["3000:3000"]
+    environment:
+      - VITE_API_URL=http://localhost:8000
+
+  backend:
+    build: ./backend
+    ports: ["8000:8000"]
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://user:pass@db:5432/taskquest
+      - OPENAI_API_KEY=\${OPENAI_API_KEY}
+      - REDIS_URL=redis://redis:6379
+    depends_on: [db, redis]
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: taskquest
+    volumes: ["postgres_/var/lib/postgresql/data"]
+
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]`}
+            </pre>
           </div>
         </div>
       </motion.div>
@@ -335,13 +584,14 @@ export default function Architecture() {
         <h3 className="text-lg font-semibold text-white mb-4">Следующие шаги</h3>
         
         <div className="space-y-3">
-          <StepItem number={1} title="Настроить backend" description="Создать Express.js сервер с базовой структурой" />
-          <StepItem number={2} title="Подключить базу данных" description="Настроить PostgreSQL и Prisma ORM" />
-          <StepItem number={3} title="Реализовать аутентификацию" description="JWT токены, регистрация, вход" />
-          <StepItem number={4} title="Миграция данных" description="Перенести логику из localStorage на API" />
-          <StepItem number={5} title="Интеграция ИИ" description="Подключить OpenAI API, создать чат-интерфейс" />
-          <StepItem number={6} title="Тестирование" description="Unit тесты, интеграционные тесты, E2E" />
-          <StepItem number={7} title="Деплой" description="Docker, CI/CD, мониторинг" />
+          <StepItem number={1} title="Инициализация FastAPI проекта" description="poetry init, установка fastapi, uvicorn, sqlalchemy, pydantic" />
+          <StepItem number={2} title="Настройка PostgreSQL + SQLAlchemy" description="Создание моделей, миграции через Alembic" />
+          <StepItem number={3} title="Аутентификация" description="JWT токены через python-jose, хэширование через passlib+bcrypt" />
+          <StepItem number={4} title="CRUD API для задач" description="Endpoints для создания, чтения, обновления, удаления задач" />
+          <StepItem number={5} title="Миграция frontend" description="Замена localStorage на API вызовы через React Query" />
+          <StepItem number={6} title="Интеграция ИИ" description="OpenAI API + LangChain, чат-интерфейс с WebSocket" />
+          <StepItem number={7} title="Тестирование" description="pytest + httpx для API тестов, покрытие кода" />
+          <StepItem number={8} title="Деплой" description="Docker, Railway/Render, CI/CD через GitHub Actions" />
         </div>
       </motion.div>
     </motion.div>
