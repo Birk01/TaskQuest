@@ -1,6 +1,4 @@
-import { Task, Achievement, User, LeaderboardEntry } from './types';
-
-export const initialUser: User = {
+export const initialUser = {
   name: 'Алексей',
   avatar: '🧙‍♂️',
   level: 7,
@@ -14,7 +12,7 @@ export const initialUser: User = {
   joinDate: '2024-09-15',
 };
 
-export const initialTasks: Task[] = [
+export const initialTasks = [
   {
     id: '1',
     title: 'Утренняя зарядка',
@@ -94,7 +92,7 @@ export const initialTasks: Task[] = [
   },
 ];
 
-export const initialAchievements: Achievement[] = [
+export const initialAchievements = [
   {
     id: '1',
     title: 'Первый шаг',
@@ -193,7 +191,7 @@ export const initialAchievements: Achievement[] = [
   },
 ];
 
-export const leaderboardData: LeaderboardEntry[] = [
+export const leaderboardData = [
   { id: '1', name: 'Мария К.', avatar: '🧝‍♀️', level: 15, xp: 7500, tasksCompleted: 342, streak: 45 },
   { id: '2', name: 'Дмитрий П.', avatar: '🦸‍♂️', level: 12, xp: 5800, tasksCompleted: 278, streak: 33 },
   { id: '3', name: 'Алексей', avatar: '🧙‍♂️', level: 7, xp: 3400, tasksCompleted: 156, streak: 12 },

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppProvider, useAppState } from './context';
+import { AppProvider, useAppState } from './context.jsx';
 import Sidebar from './components/Sidebar';
 import MobileNav from './components/MobileNav';
 import Dashboard from './components/Dashboard';
@@ -7,7 +7,6 @@ import Tasks from './components/Tasks';
 import Achievements from './components/Achievements';
 import Leaderboard from './components/Leaderboard';
 import Profile from './components/Profile';
-import { User } from 'lucide-react';
 
 function AppContent() {
   const [currentPage, setCurrentPage] = useState('dashboard');
