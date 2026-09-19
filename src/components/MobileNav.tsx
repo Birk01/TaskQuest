@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Home, ListTodo, Trophy, Users, Layers } from 'lucide-react';
+import { Home, ListTodo, Trophy, Users } from 'lucide-react';
 
 interface MobileNavProps {
   currentPage: string;
@@ -12,7 +12,6 @@ const navItems = [
   { id: 'tasks', label: 'Задачи', icon: ListTodo },
   { id: 'achievements', label: 'Бейджи', icon: Trophy },
   { id: 'leaderboard', label: 'Рейтинг', icon: Users },
-  { id: 'architecture', label: 'План', icon: Layers },
 ];
 
 export default function MobileNav({ currentPage, onNavigate }: MobileNavProps) {

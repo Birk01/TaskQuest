@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Home, ListTodo, Trophy, Users, Flame, Target, Layers } from 'lucide-react';
+import { Home, ListTodo, Trophy, Users, Flame, Target } from 'lucide-react';
 
 interface SidebarProps {
   currentPage: string;
@@ -13,7 +13,6 @@ const navItems = [
   { id: 'tasks', label: 'Задачи', icon: ListTodo },
   { id: 'achievements', label: 'Достижения', icon: Trophy },
   { id: 'leaderboard', label: 'Рейтинг', icon: Users },
-  { id: 'architecture', label: 'Архитектура', icon: Layers },
 ];
 
 export default function Sidebar({ currentPage, onNavigate, streak }: SidebarProps) {
